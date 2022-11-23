@@ -65,13 +65,19 @@ int main()
     setup();
     setupSPI();
     
+    // Timer causes issues
 //    setupTMR();
     
     
-    uint32_t i = 0;
+    uint16_t t = 0;
     while(1) {
-        i = 1+(i%10);
-        signal = (i*4000)/10; //Maximum output is 4095, min is 0
+        signal = 2047+2047*sin((float)t*6.28318531/256.0);
+        
+        t++;
+        
+        if((t % 256) == 0) {
+            t = 0;
+        }
         
         LATBbits.LATB6 = 0;
       
@@ -101,7 +107,7 @@ int main()
         delay_us(5);
         
         
-        delay_ms(2000);
+//        delay_ms(2000);
     }
 }
 
